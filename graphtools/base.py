@@ -109,7 +109,7 @@ class Data(Base):
     """
 
     def __init__(
-        self, data, n_pca=None, rank_threshold=None, random_state=None, **kwargs
+        self, data, n_pca=None, rank_threshold=None, random_state=None, precomputed_latents=None, **kwargs
     ):
 
         self._check_data(data)
@@ -131,7 +131,12 @@ class Data(Base):
         self.n_pca = n_pca
         self.rank_threshold = rank_threshold
         self.random_state = random_state
-        self.data_nu = self._reduce_data()
+        self.precomputed_latents = precomputed_latents
+        if type(self.precomputed_latents) != type(None):
+            print('skipping latent dimension reduction and setting it to precomputed latents')
+            self.data_nu = self.precomputed_latents
+        else:
+            self.data_nu = self._reduce_data()
         super().__init__(**kwargs)
 
     def _parse_n_pca_threshold(self, data, n_pca, rank_threshold):

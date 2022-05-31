@@ -36,6 +36,7 @@ def Graph(
     graphtype="auto",
     use_pygsp=False,
     initialize=True,
+    precomputed_latents=None,
     **kwargs
 ):
     """Create a graph built on data.
@@ -180,7 +181,9 @@ def Graph(
         “Numerical Recipes (3rd edition)”,
         Cambridge University Press, 2007, page 795.
     """
-    _logger.set_level(verbose)
+    print('aa',_logger)
+    print(verbose)
+    #_logger.level(verbose)
     if sample_idx is not None and len(np.unique(sample_idx)) == 1:
         warnings.warn("Only one unique sample. Not using MNNGraph")
         sample_idx = None
